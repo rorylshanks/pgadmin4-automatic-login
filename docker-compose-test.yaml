@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  pgadmin:
+    build:
+      context: . # Ensure your Dockerfile and custom_entrypoint.sh are in this directory
+      dockerfile: Dockerfile # The name of your Dockerfile
+    environment:
+      DATABASE_HOST: postgres
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: password
+    ports:
+      - "80:80" # Expose pgAdmin on port 80 of the host
+    depends_on:
+      - postgres
+    restart: always
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: password
+    restart: always
